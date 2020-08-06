@@ -214,5 +214,5 @@ app.post("/addComment", function(req, res) {
 	});
 });
   
-server.listen(8081, 'localhost');  
+server.listen(8080, 'localhost');  
 console.log("MyProject Server is Listening on port 8080");
