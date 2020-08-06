@@ -2,20 +2,27 @@
 
   app.component('postAdd', {
   templateUrl: "blogpost/post.template.html",
-  controller: function($scope, $rootScope, request, $window, fileUpload) {
+  controller: function($scope, $rootScope, request, $window, $http) {
 
     $scope.add = true;
 
     $scope.data = {
       date: new Date(),
       title: '',
-      image: 'img/img1.jpg', // TODO: replace when upload is fixed :(
+      image: '',
       content: ''
     }
 
+    var query = {
+      url: 'getPostsCount'
+    }
+    request.query(query, 'GET').then(function(res) {
+      $rootScope.count = res.data.count;
+    });
+
     $scope.save = function() {
       if ('' == $scope.data.title
-        // && '' == $scope.data.image // TODO: return when upload is fixed :(
+        && '' == $scope.data.image
         && '' == $scope.data.content) {
         $window.location.href = '#/';
         return;
@@ -25,7 +32,7 @@
         url: 'savePost?new=true',
         data: {
           'title': $scope.data.title,
-          'image': $scope.data.image, // TODO: replace when upload is fixed :(
+          'image': $scope.data.image,
           'content': $scope.data.content,
           'id': ++$rootScope.count
         }
@@ -37,7 +44,7 @@
 
     $scope.cancel = function() {
       if ('' != $scope.data.title
-        // || '' != $scope.data.image // TODO: replace when upload is fixed :(
+        || '' != $scope.data.image
         || '' != $scope.data.content) {
         if (confirm("Some contents are updated. Do you wish to continue?")) {
           $window.location.href = '#/';
@@ -50,15 +57,24 @@
     }
 
     $scope.uploadImage = function (files) {
-        // console.log(files);
+        var file = files[0];
 
-        // var file = files[0];
+        var uploadUrl = "upload";
 
-        // console.log('file is ' );
-        // console.dir(file);
+        var fd = new FormData();
+         fd.append('file', file);
 
-        // var uploadUrl = "upload";
-        // fileUpload.uploadFileToUrl(file, uploadUrl);
+         $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+         })
+
+         .success(function(){
+          $scope.data.image = 'img/'+file.name;
+         })
+
+         .error(function(){
+         });
     }
 
   }

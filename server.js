@@ -3,6 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var path = require("path");
 var util = require('util');
   
 app.use(express.static("App"));  
@@ -18,6 +19,35 @@ app.use(function(req, res, next) {
 app.get('/', function (req, res) {  
     res.redirect('/');
 });
+
+const multer = require("multer");
+
+const handleError = (err, res) => {
+  res
+    .status(500)
+    .contentType("text/plain")
+    .end("Oops! Something went wrong!");
+};
+
+const upload = multer({
+  dest: "./app/img"
+});
+
+
+app.post("/upload", upload.single("file"), (req, res) => {
+    const tempPath = req.file.path;
+    const targetPath = path.join(__dirname, "./app/img/"+req.file.originalname);
+
+	fs.rename(tempPath, targetPath, err => {
+	if (err) return handleError(err, res);
+
+	res
+	  .status(200)
+	  .contentType("text/plain")
+	  .end("File uploaded!");
+  	});
+  }
+);
 
 app.post("/authenticate", function(req, res) {
 	var users = null;
@@ -116,6 +146,7 @@ app.post("/savePost", function(req, res) {
 	    let post = null;
 
 	    posts = JSON.parse(data);
+	    console.log(body);
 
 	    if (req.query.new) {
 	    	let post = {
@@ -183,5 +214,5 @@ app.post("/addComment", function(req, res) {
 	});
 });
   
-server.listen(8080, 'localhost');  
+server.listen(8081, 'localhost');  
 console.log("MyProject Server is Listening on port 8080");

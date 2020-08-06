@@ -421,6 +421,10 @@ input[type='submit'] {
 	position: relative;
 }
 
+.post-container .image div img {
+	height: calc(100% + 30px);
+}
+
 #fileUpload {
 	opacity: 0;
 }

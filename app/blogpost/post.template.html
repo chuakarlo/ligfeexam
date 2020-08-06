@@ -21,16 +21,10 @@
 	<div class="image">
 		<span ng-if="!edit && !add"><img src="{{data.image}}"></span>
 		<div ng-if="edit || add">
-			<!-- <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" class="fileUpload"/> -->
+			<img ng-if="data.image != ''" src="{{data.image}}">
 		    <span class="fileUploadButton text-white" onclick="$('#fileUpload').trigger('click');">UPLOAD IMAGE</span>
 		    <input type='file' id="fileUpload" onchange="angular.element(this).scope().uploadImage(this.files)" file-model = "myFile"/>
 		</div>
-		<!-- <input type="file" name="file" ng-change="uploadFile(this.files)" onchange="angular.element(this).scope().uploadFile(this.files)"/> -->
-		
-
-		<!-- <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" />
-		<div id="dropbox" class="dropbox" ng-class="dropClass"><span>{{dropText}}</span></div>
-		<input type="button" ng-click="uploadFile()" value="Upload" /> -->
 	</div>
 	<div class="content jp-text">
 		<span ng-if="!edit && !add">{{data.content}}</span>

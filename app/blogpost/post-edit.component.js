@@ -101,5 +101,26 @@
 
       return text;
     }
+
+    $scope.uploadImage = function (files) {
+        var file = files[0];
+
+        var uploadUrl = "upload";
+
+        var fd = new FormData();
+         fd.append('file', file);
+
+         $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+         })
+
+         .success(function(){
+          $scope.data.image = 'img/'+file.name;
+         })
+
+         .error(function(){
+         });
+    }
   }
 });

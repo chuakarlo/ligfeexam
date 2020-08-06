@@ -5,7 +5,8 @@
   "dependencies": {
     "angular1-apollo": "^0.3.0",
     "apollo-client": "^2.6.10",
-    "express": "*"
+    "express": "*",
+    "multer": "^1.4.2"
   },
   "engine": "node >=0.6.x",
   "scripts": {
