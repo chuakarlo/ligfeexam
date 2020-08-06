@@ -1,0 +1,57 @@
+<div class="breadcrumb jp-text">
+	<a href="#/">HOME</a> >
+	<span ng-if="!add" class="jp-text">{{data.title}}</span>
+	<span ng-if="add" class="jp-text">Create New Post</span>
+</div>
+
+<div class="post-container">
+	<div class="edit-post">
+		<a class="edit-post-button" href="#/post/{{data.id}}/edit" ng-if="$root.isAuthenticated == 'true' && !edit && !add">Edit Post</a>
+
+		<a class="edit-post-button" href="" ng-click="cancel()" ng-if="$root.isAuthenticated == 'true' && (edit || add)">Cancel</a>
+		<a class="edit-post-button" href="" ng-click="save()" ng-if="$root.isAuthenticated == 'true' && (edit || add)">Save Post</a>
+	</div>
+	<div class="date">
+		<span>{{data.date | date: "yyyy.MM.dd"}}</span>
+	</div>
+	<div class="title jp-text">
+		<span ng-if="!edit && !add">{{data.title}}</span>
+		<textarea placeholder="Title" class="jp-text title" ng-if="edit || add" ng-model="data.title"></textarea>
+	</div>
+	<div class="image">
+		<span ng-if="!edit && !add"><img src="{{data.image}}"></span>
+		<div ng-if="edit || add">
+			<!-- <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" class="fileUpload"/> -->
+		    <span class="fileUploadButton text-white" onclick="$('#fileUpload').trigger('click');">UPLOAD IMAGE</span>
+		    <input type='file' id="fileUpload" onchange="angular.element(this).scope().uploadImage(this.files)" file-model = "myFile"/>
+		</div>
+		<!-- <input type="file" name="file" ng-change="uploadFile(this.files)" onchange="angular.element(this).scope().uploadFile(this.files)"/> -->
+		
+
+		<!-- <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" />
+		<div id="dropbox" class="dropbox" ng-class="dropClass"><span>{{dropText}}</span></div>
+		<input type="button" ng-click="uploadFile()" value="Upload" /> -->
+	</div>
+	<div class="content jp-text">
+		<span ng-if="!edit && !add">{{data.content}}</span>
+		<textarea placeholder="Content" class="jp-text content" ng-if="edit || add" ng-model="data.content"></textarea>
+	</div>
+
+	<hr ng-if="!add">
+
+	<div class="comment-title" ng-if="!add">
+		COMMENT
+	</div>
+
+	<div class="comment-container" ng-repeat="(k,v) in data.comments" ng-if="!add">
+		<div class="jp-text content">{{v.content}}</div>
+		<div class="date">{{v.date}}</div>
+	</div>
+
+	<div class="comment" ng-if="!add">
+		<form ng-submit="submitComment()">
+			<textarea class="jp-text" ng-model="comment.content" placeholder="Write comment"></textarea>
+			<button class="text-white" type="submit">SUBMIT</button>
+		</form>
+	</div>
+</div>

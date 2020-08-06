@@ -1,0 +1,19 @@
+<div class="news-container">
+	<span class="title" ng-if="data.length >= 4">NEWS</span>
+	<a class="new-post-button" href="#/post/add" ng-if="$root.isAuthenticated == 'true'">Create New Post</a>
+
+	<div class="container">
+		<div class="card" ng-repeat="(k,v) in data" ng-class="{true: '', false: 'card-gap'}[(k+1)%3 == 0]">
+			<a href="#/post/{{v.id}}">
+				<div class="card-inner">
+					<img src="{{v.image}}">
+					<div class="date">{{v.date | date: "yyyy.MM.dd"}}</div>
+					<div class="caption jp-text">{{v.title}}</div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="text-center">
+		<button class="text-white" ng-if="$root.count > 9 && lastIndex < $root.count" ng-click="loadMore()">LOAD MORE</button>
+	</div>
+</div>
