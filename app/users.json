@@ -1,21 +1,5 @@
 [
   {
-    "isAuthenticated": "true"
-  },
-  {
-    "email": "karlo",
-    "password": "1234"
-  },
-  {
-    "email": "qwe",
-    "password": "qwe"
-  },
-  {
-    "email": "test",
-    "password": "test"
-  },
-  {
-    "email": "wer",
-    "password": "wer"
+    "isAuthenticated": "false"
   }
 ]
